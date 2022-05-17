@@ -4,9 +4,9 @@ package constants;
  * DB関連の項目値を定義するインターフェース
  * ※インターフェイスに定義した変数は public static final 修飾子がついているとみなされる
  */
-
 public interface JpaConst {
-  //persistence-unit名
+
+    //persistence-unit名
     String PERSISTENCE_UNIT_NAME = "daily_report_system";
 
     //データ取得件数の最大値
@@ -37,6 +37,8 @@ public interface JpaConst {
     String REP_COL_REP_DATE = "report_date"; //いつの日報かを示す日付
     String REP_COL_TITLE = "title"; //日報のタイトル
     String REP_COL_CONTENT = "content"; //日報の内容
+    String REP_COL_BEGIN_AT = "begin_at"; //出勤日時
+    String REP_COL_FINISH_AT = "finish_at"; //退勤日時
     String REP_COL_CREATED_AT = "created_at"; //登録日時
     String REP_COL_UPDATED_AT = "updated_at"; //更新日時
 
@@ -74,6 +76,5 @@ public interface JpaConst {
     //指定した従業員が作成した日報の件数を取得する
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE;
-
 
 }

@@ -28,6 +28,16 @@
 <label for="${AttributeConst.REP_CONTENT.getValue()}">内容</label><br />
 <textarea name="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50">${report.content}</textarea>
 <br /><br />
+
+<fmt:parseDate value="${report.beginAt}" pattern="yyyy-MM-dd'T'HH:mm" var="beginDay" type="date" />
+<label for="${AttributeConst.REP_BEGINDATE.getValue()}">出勤時間</label><br />
+<input type="time" name="${AttributeConst.REP_BEGINDATE.getValue()}" value="<fmt:formatDate value='${beginDay}' pattern='HH:mm' />" />
+<br /><br />
+
+<fmt:parseDate value="${report.finishAt}" pattern="yyyy-MM-dd'T'HH:mm" var="finishDay" type="date" />
+<label for="${AttributeConst.REP_FINISHDATE.getValue()}">退勤時間</label><br />
+<input type="time" name="${AttributeConst.REP_FINISHDATE.getValue()}" value="<fmt:formatDate value='${finishDay}' pattern='HH:mm' />" />
+<br /><br />
 <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
 <button type="submit">投稿</button>

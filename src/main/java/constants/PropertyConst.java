@@ -4,9 +4,9 @@ package constants;
  * アプリケーションスコープのパラメータ名を定義するEnumクラス
  *
  */
-
 public enum PropertyConst {
-  //ペッパー文字列
+
+    //ペッパー文字列
     PEPPER("pepper");
 
     private final String text;
@@ -17,5 +17,4 @@ public enum PropertyConst {
     public String getValue() {
         return this.text;
     }
-
 }

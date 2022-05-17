@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -15,8 +17,11 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.PropertyConst;
 
+/**
+ * 各Actionクラスの親クラス。共通処理を行う。
+ *
+ */
 public abstract class ActionBase {
-
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -181,6 +186,18 @@ public abstract class ActionBase {
             return LocalDate.now();
         }
         return LocalDate.parse(strDate);
+    }
+
+    /**
+     * 文字列をLocalDateTime型に変換する
+     * @param strDateTime 変換前文字列
+     * @return 変換後LocalDateTimeインスタンス
+     */
+    protected LocalDateTime toLocalDateTime(String strDateTime) {
+        //今日の日付を設定し、文字列に変換
+        LocalDate day = LocalDate.now();
+        String strDateTime2 = day.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"T"+strDateTime+":00.00";
+        return LocalDateTime.parse(strDateTime2);
     }
 
     /**

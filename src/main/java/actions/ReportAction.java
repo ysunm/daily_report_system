@@ -2,6 +2,8 @@ package actions;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -103,6 +105,22 @@ public class ReportAction extends ActionBase {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
             }
 
+            //出退勤時間用に今日の日付を設定し、文字列に変換
+            LocalDate beg_fin_day = LocalDate.now();
+            //String str_beg_day = beg_fin_day.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+getRequestParam(AttributeConst.REP_BEGINDATE)+":00";
+            //String str_fin_day = beg_fin_day.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+getRequestParam(AttributeConst.REP_FINISHDATE)+":00";
+
+          //DateTimeFormatterクラスのオブジェクトを生成
+            //DateTimeFormatter dtFt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            //LocalDateTime beginday_hour_min = LocalDateTime.parse(str_beg_day,dtFt);
+            //LocalDateTime finishday_hour_min = LocalDateTime.parse(str_fin_day,dtFt);
+
+            String str_beg_fin_day = beg_fin_day.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            LocalDateTime beginday_hour_min = LocalDateTime.parse(str_beg_fin_day+"T"+getRequestParam(AttributeConst.REP_BEGINDATE)+":00.00");
+            LocalDateTime finishday_hour_min = LocalDateTime.parse(str_beg_fin_day+"T"+getRequestParam(AttributeConst.REP_FINISHDATE)+":00.00");
+
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
@@ -113,6 +131,8 @@ public class ReportAction extends ActionBase {
                     day,
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
+                    beginday_hour_min,
+                    finishday_hour_min,
                     null,
                     null);
 
@@ -210,6 +230,8 @@ public class ReportAction extends ActionBase {
             rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
             rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
             rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
+            rv.setBeginAt(toLocalDateTime(getRequestParam(AttributeConst.REP_BEGINDATE)));
+            rv.setFinishAt(toLocalDateTime(getRequestParam(AttributeConst.REP_FINISHDATE)));
 
             //日報データを更新する
             List<String> errors = service.update(rv);
